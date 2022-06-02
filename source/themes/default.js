@@ -6,6 +6,7 @@ export const defaultTheme = {
     disabledButtonText: 'rgba(255, 255, 255, 0.87)',
     blue: '#00BDD3',
     lightGrey: '#F8F8F8',
+    darkGrey: '#7E7E7E',
     defaultBalck: 'rgba(0, 0, 0, 0.87)',
     defaulWhite: '#FFFFFF',
   },

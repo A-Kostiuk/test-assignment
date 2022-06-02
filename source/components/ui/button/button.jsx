@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyledButton } from './styles';
 
-function Button({ children, type, minWidth, link, ...props }) {
+function Button({ children, color, minWidth, link, ...props }) {
   return (
     <StyledButton
-      $type={type}
+      $color={color}
       $minWidth={minWidth}
       {...(link ? { href: link } : { as: 'button', type: 'button' })}
       {...props}

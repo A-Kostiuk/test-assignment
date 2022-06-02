@@ -10,7 +10,7 @@ export const StyledButton = styled.a`
   min-width: ${(props) => (props.$minWidth ? `${props.$minWidth}px` : '100%')};
   cursor: pointer;
   background-color: ${(props) => {
-    switch (props.$type) {
+    switch (props.$color) {
       case 'yellow':
         return props.theme.colors.yellow;
       default:
@@ -20,7 +20,7 @@ export const StyledButton = styled.a`
 
   &:hover {
     background-color: ${(props) => {
-    switch (props.$type) {
+    switch (props.$color) {
       case 'yellow':
         return props.theme.colors.yellowButtonHover;
       default:

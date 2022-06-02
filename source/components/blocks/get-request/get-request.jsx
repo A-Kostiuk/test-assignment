@@ -47,7 +47,7 @@ function GetRequest() {
       </Title>
       <CardsList error={error} items={items} isLoaded={isLoaded} />
       {isFollowing && (
-        <Button type="yellow" minWidth={120} onClick={handlerClick}>
+        <Button color="yellow" minWidth={120} onClick={handlerClick}>
           Show more
         </Button>
       )}
