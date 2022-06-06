@@ -35,14 +35,11 @@ const createData = (data) => {
   return formData;
 };
 
-
 function SignUp({ setRegister }) {
   const [selectValue, setSelectValue] = useState(null);
   const [positions, setPositions] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [uploadError, setUploadError] = useState(null);
   const [succsessRegistry, setSuccsessRegistry] = useState(false);
-
 
   useEffect(() => {
     fetch(POSITIONS_URL)
@@ -99,49 +96,8 @@ function SignUp({ setRegister }) {
       });
   };
 
-  const validateUploadInput = (evt) => {
-    const getDimensions = (image) => {
-      const dimensions = {};
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = document.createElement('img');
-        img.onload = () => {
-          dimensions.width = img.width;
-          dimensions.height = img.height;
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(image);
-      return dimensions;
-    };
-    const file = evt.target.files[0];
-    const fileName = file.name.toLowerCase();
-    const size = file.size;
-    const currentDimensions = getDimensions(file);
-
-    const checkTypes = PhotoConditions.PHOTO_TYPES.some((it) =>
-      fileName.endsWith(it),
-    );
-    const checkSize = PhotoConditions.MAX_SIZE <= size;
-    const checkDimensions =
-      PhotoConditions.MIN_WIDTH <= currentDimensions.width &&
-      PhotoConditions.MIN_HEIGHT <= currentDimensions.height;
-    if (!checkTypes) {
-      setUploadError('The photo format must be jpeg/jpg type');
-      return null;
-    } else if (checkSize) {
-      setUploadError('The photo size must not be greater than 5 Mb');
-      return null;
-    } else if (checkDimensions) {
-      setUploadError('Minimum size of photo 70x70px');
-      return null;
-    } else {
-      setUploadError('');
-    }
-  };
-
   return (
-    <Section id='sign_up'>
+    <Section id="sign_up">
       <Title level={1} marginBottom={50}>
         Working with POST request
       </Title>
@@ -218,17 +174,62 @@ function SignUp({ setRegister }) {
         )}
 
         <UploadInput
-          {...register('photo', { required: true })}
+          {...register('photo', {
+            required: 'Field is required',
+            validate: {
+              checkTypes: (evt) => {
+                const name = evt[0].name.toLowerCase();
+                const checkTypes = PhotoConditions.PHOTO_TYPES.some((it) =>
+                  name.endsWith(it),
+                );
+                return checkTypes || 'The photo format must be jpeg/jpg type';
+              },
+              checkSize: (evt) => {
+                const size = evt[0].size;
+                return (
+                  PhotoConditions.MAX_SIZE >= size ||
+                  'The photo size must not be greater than 5 Mb'
+                );
+              },
+              checkDimensions: async (evt) => {
+
+                async function loadReader(file) {
+                  return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = (e) => resolve(e.target.result);
+                  });
+                }
+
+                async function loadImg(src) {
+                  return new Promise((resolve, reject) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.onload = () => resolve ({ width: img.width, height: img.height });
+                  });
+                }
+
+                let currentDimensions;
+                await loadReader(evt[0]).then((result) => loadImg(result)).then((dimensions) => currentDimensions = dimensions);
+                const checkDimensions =
+                  PhotoConditions.MIN_WIDTH <= currentDimensions.width &&
+                  PhotoConditions.MIN_HEIGHT <= currentDimensions.height;
+                return checkDimensions || 'Minimum size of photo 70x70px';
+              },
+            },
+          })}
           accept="image/jpeg, image/jpg"
-          onChange={validateUploadInput}
-          error={uploadError}
+          error={errors?.photo?.message}
         />
 
         <Button type="submit" color="yellow" minWidth={100}>
           Sign up
         </Button>
       </Form>
-      <Popup isShow={succsessRegistry} onClose={() => setSuccsessRegistry(false)}/>
+      <Popup
+        isShow={succsessRegistry}
+        onClose={() => setSuccsessRegistry(false)}
+      />
     </Section>
   );
 }
