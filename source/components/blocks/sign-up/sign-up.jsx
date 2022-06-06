@@ -87,7 +87,7 @@ function SignUp({ setRegister }) {
         if (result.success) {
           setSuccsessRegistry(true);
           setRegister(Date.now());
-          reset({photo: undefined});
+          reset();
         } else {
           const error = new Error(result.message);
           throw error;
