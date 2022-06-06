@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Popup from '../../layout/popup/popup';
-import { Li, Section, Ul } from '../../styled';
+import { Li, Section } from '../../styled';
 import Button from '../../ui/Button/button';
 import Input from '../../ui/input/input';
 import RadioButton from '../../ui/radio-button/radio-button';
 import Title from '../../ui/title/title';
 import UploadInput from '../../ui/upload-input/upload-input';
-import { Fieldset, Form, Legend, RadioLabel } from './styles';
+import { Fieldset, Form, Legend, RadioLabel, RadioList } from './styles';
 
 const POSITIONS_URL =
   'https://frontend-test-assignment-api.abz.agency/api/v1/positions';
@@ -154,7 +154,7 @@ function SignUp({ setRegister }) {
         {isLoaded && (
           <Fieldset>
             <Legend>Select your position</Legend>
-            <Ul>
+            <RadioList>
               {positions.map((item) => (
                 <Li key={item.id}>
                   <RadioButton
@@ -169,7 +169,7 @@ function SignUp({ setRegister }) {
                   />
                 </Li>
               ))}
-            </Ul>
+            </RadioList>
           </Fieldset>
         )}
 

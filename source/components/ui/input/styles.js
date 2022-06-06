@@ -22,8 +22,9 @@ export const Label = styled.label`
 `;
 
 export const Field = styled.input`
-  font-family: inherit;
-  line-height: inherit;
+  font-family: ${(props) => props.theme.fontFamily}, 'Arial', sans-serif;
+  font-size: ${(props) => props.theme.fontSizeDefault};
+  line-height: ${(props) => props.theme.lineHeightDefault};
   border: 1px solid #d0cfcf;
   border-radius: 4px;
   padding: 13px 15px;

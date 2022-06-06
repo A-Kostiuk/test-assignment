@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { css } from 'styled-components';
+import { Ul } from '../../styled';
 
 export const Form = styled.form`
   max-width: 380px;
@@ -17,6 +18,12 @@ export const Fieldset = styled.fieldset`
 export const Legend = styled.legend`
   padding: 0;
   margin-bottom: 11px;
+`;
+
+export const RadioList = styled(Ul)`
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 `;
 
 export const RadioLabel = styled.span`
