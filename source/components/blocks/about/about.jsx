@@ -16,7 +16,7 @@ function About() {
           in mind. They should also be excited to learn, as the world of
           Front-End Development keeps evolving.
         </AboutText>
-        <Button color="yellow" minWidth={100}>
+        <Button color="yellow" minWidth={100} link="#sign_up">
           Sign up
         </Button>
       </Wrapper>

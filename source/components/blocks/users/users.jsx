@@ -7,7 +7,7 @@ import Title from '../../ui/title/title';
 const URL =
   'https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6';
 
-function GetRequest() {
+function Users({register}) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isFollowing, setIsFollowing] = useState(null);
@@ -21,27 +21,28 @@ function GetRequest() {
         setResponce(result);
         setItems([...items, ...result.users]);
         setIsFollowing(result.page !== result.total_pages);
+      })
+      .catch((err) => {
+        setError(err);
       });
   };
 
   useEffect(() => {
     fetch(URL)
       .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setResponce(result);
-          setItems(result.users);
-          setIsFollowing(result.page !== result.total_pages);
-        },
-        (err) => {
-          setIsLoaded(true);
-          setError(err);
-        },
-      );
-  }, []);
+      .then((result) => {
+        setIsLoaded(true);
+        setResponce(result);
+        setItems(result.users);
+        setIsFollowing(result.page !== result.total_pages);
+      })
+      .catch((err) => {
+        setIsLoaded(true);
+        setError(err);
+      });
+  }, [register]);
   return (
-    <Section>
+    <Section id='users'>
       <Title level={1} marginBottom={50}>
         Working with GET request
       </Title>
@@ -55,4 +56,4 @@ function GetRequest() {
   );
 }
 
-export default GetRequest;
+export default Users;

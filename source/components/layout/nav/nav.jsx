@@ -5,10 +5,10 @@ import { StyledNav } from './styles';
 function Nav() {
   return (
     <StyledNav>
-      <Button color="yellow" minWidth={100}>
+      <Button color="yellow" minWidth={100} link='#users'>
         Users
       </Button>
-      <Button color="yellow" minWidth={100}>
+      <Button color="yellow" minWidth={100} link='#sign_up'>
         Sign up
       </Button>
     </StyledNav>

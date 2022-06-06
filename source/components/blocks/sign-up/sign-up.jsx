@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import Popup from '../../layout/popup/popup';
 import { Li, Section, Ul } from '../../styled';
 import Button from '../../ui/Button/button';
 import Input from '../../ui/input/input';
@@ -10,8 +11,10 @@ import { Fieldset, Form, Legend, RadioLabel } from './styles';
 
 const POSITIONS_URL =
   'https://frontend-test-assignment-api.abz.agency/api/v1/positions';
-const TOKEN_URL = 'https://frontend-test-assignment-api.abz.agency/api/v1/token';
-const REGISTER_URL = 'https://frontend-test-assignment-api.abz.agency/api/v1/users';
+const TOKEN_URL =
+  'https://frontend-test-assignment-api.abz.agency/api/v1/token';
+const REGISTER_URL =
+  'https://frontend-test-assignment-api.abz.agency/api/v1/users';
 
 const PhotoConditions = {
   PHOTO_TYPES: ['jpg', 'jpeg'],
@@ -20,12 +23,26 @@ const PhotoConditions = {
   MIN_HEIGHT: 70,
 };
 
-function PostRequest() {
+const createData = (data) => {
+  const formData = new FormData();
+  for (const key in data) {
+    if (key === 'photo') {
+      formData.append(key, data[key][0]);
+    } else {
+      formData.append(key, data[key]);
+    }
+  }
+  return formData;
+};
+
+
+function SignUp({ setRegister }) {
   const [selectValue, setSelectValue] = useState(null);
   const [positions, setPositions] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [uploadError, setUploadError] = useState(null);
-  // const [token, setToken] = useState(null);
+  const [succsessRegistry, setSuccsessRegistry] = useState(false);
+
 
   useEffect(() => {
     fetch(POSITIONS_URL)
@@ -40,21 +57,46 @@ function PostRequest() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
   });
 
   const onSubmit = async (data) => {
-    const getToken = await fetch(TOKEN_URL).then((res) => res.json());
+    const getToken = await fetch(TOKEN_URL)
+      .then((res) => res.json())
+      .catch((err) => {
+        const error = new Error(err);
+        throw error;
+      });
     const token = await getToken.token;
+
+    const formData = await createData(data);
 
     const requestOptions = {
       method: 'POST',
-      body: JSON.stringify(data),
-      headers: { Token: token },
+      body: formData,
+      headers: {
+        Token: token,
+      },
     };
-    fetch(REGISTER_URL, requestOptions).then((responce) => responce.json()).then((result) => console.log(result));
+    await fetch(REGISTER_URL, requestOptions)
+      .then((responce) => responce.json())
+      .then((result) => {
+        if (result.success) {
+          setSuccsessRegistry(true);
+          setRegister(Date.now());
+          reset({photo: undefined});
+        } else {
+          const error = new Error(result.message);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        const error = new Error(err);
+        throw error;
+      });
   };
 
   const validateUploadInput = (evt) => {
@@ -99,11 +141,11 @@ function PostRequest() {
   };
 
   return (
-    <Section>
+    <Section id='sign_up'>
       <Title level={1} marginBottom={50}>
         Working with POST request
       </Title>
-      <Form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
+      <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <Input
           {...register('name', {
             required: 'Field is required',
@@ -162,7 +204,7 @@ function PostRequest() {
                   <RadioButton
                     {...register('position_id')}
                     labelComponent={RadioLabel}
-                    value={item.id}
+                    value={Number(item.id)}
                     description={item.name}
                     selectValue={selectValue}
                     onChange={(evt) => {
@@ -186,8 +228,9 @@ function PostRequest() {
           Sign up
         </Button>
       </Form>
+      <Popup isShow={succsessRegistry} onClose={() => setSuccsessRegistry(false)}/>
     </Section>
   );
 }
 
-export default PostRequest;
+export default SignUp;
