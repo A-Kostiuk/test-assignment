@@ -8,8 +8,8 @@ function Card({name, position, phone, email, photo}) {
       <Photo width={70} height={70} alt="Photo" src={photo}/>
       <Text marginBottom={20}>{name}</Text>
       <Text>{position}</Text>
-      <Text>{email}</Text>
-      <Text>{phone}</Text>
+      <Text as='a' href={`mailto:${email}`}>{email}</Text>
+      <Text as='a' href={`tel:${phone}`}>{phone}</Text>
     </>
   );
 }

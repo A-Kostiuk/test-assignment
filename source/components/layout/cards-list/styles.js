@@ -29,6 +29,7 @@ export const ListItem = styled(Li)`
   padding: 20px;
   background-color: ${(props) => props.theme.colors.defaulWhite};
   width: 100%;
+  height: 100%;
   min-height: 254px;
   text-align: center;
   border-radius: 10px;
