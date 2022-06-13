@@ -18,8 +18,8 @@ export const StyledHeader = styled.header`
   padding: 10px ${(props) => props.theme.laptopPadding};
 }
 
-@media (min-width: ${(props) => props.theme.desctopWidth}) {
+@media (min-width: ${(props) => props.theme.desktopWidth}) {
   padding: 10px 0;
-  max-width: ${(props) => props.theme.desctopWidth};
+  max-width: ${(props) => props.theme.desktopWidth};
 }
 `;

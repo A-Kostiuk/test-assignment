@@ -12,7 +12,7 @@ export const Section = styled.section`
   margin: 0 auto;
   min-height: 500px;
   padding-top: 40px;
-  padding-bottom: 40px; 
+  padding-bottom: 40px;
 
   @media (min-width: ${(props) => props.theme.tabletWidth}) {
     padding-top: 88px;
@@ -25,8 +25,8 @@ export const Section = styled.section`
     min-height: 650px;
   }
 
-  @media (min-width: ${(props) => props.theme.desctopWidth}) {
-    max-width: ${(props) => props.theme.desctopWidth};
+  @media (min-width: ${(props) => props.theme.desktopWidth}) {
+    max-width: ${(props) => props.theme.desktopWidth};
   }
 `;
 
@@ -45,16 +45,16 @@ export const Wrapper = styled.div`
     padding: 0 ${(props) => props.theme.laptopPadding};
   }
 
-  @media (min-width: ${(props) => props.theme.desctopWidth}) {
+  @media (min-width: ${(props) => props.theme.desktopWidth}) {
     padding: 0;
-    max-width: ${(props) => props.theme.desctopWidth};
+    max-width: ${(props) => props.theme.desktopWidth};
   }
 `;
 
 export const AboutTitle = styled(Title)`
-  color: ${(props) => props.theme.colors.defaulWhite};
+  color: ${(props) => props.theme.colors.defaultWhite};
 `;
 
 export const AboutText = styled(Text)`
-  color: ${(props) => props.theme.colors.defaulWhite};
+  color: ${(props) => props.theme.colors.defaultWhite};
 `;

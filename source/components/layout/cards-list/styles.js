@@ -20,14 +20,14 @@ export const List = styled(Ul)`
   gap: 29px;
 }
 
-@media (min-width: ${(props) => props.theme.desctopWidth}) {
-  max-width: ${(props) => props.theme.desctopWidth};
+@media (min-width: ${(props) => props.theme.desktopWidth}) {
+  max-width: ${(props) => props.theme.desktopWidth};
 }
 `;
 
 export const ListItem = styled(Li)`
   padding: 20px;
-  background-color: ${(props) => props.theme.colors.defaulWhite};
+  background-color: ${(props) => props.theme.colors.defaultWhite};
   width: 100%;
   height: 100%;
   min-height: 254px;

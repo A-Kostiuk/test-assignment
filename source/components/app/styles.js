@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: ${(props) => props.theme.fontSizeDefault};
     line-height: ${(props) => props.theme.lineHeightDefault};
     font-weight: ${(props) => props.theme.fontWeightDefault};
-    color: ${(props) => props.theme.colors.defaultBalck};
+    color: ${(props) => props.theme.colors.defaultBlack};
   }
 
 img {

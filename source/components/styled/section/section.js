@@ -14,9 +14,9 @@ const Section = styled.section`
   padding: 0 ${(props) => props.theme.laptopPadding} 0;
 }
 
-@media (min-width: ${(props) => props.theme.desctopWidth}) {
+@media (min-width: ${(props) => props.theme.desktopWidth}) {
   padding: 0;
-  max-width: ${(props) => props.theme.desctopWidth};
+  max-width: ${(props) => props.theme.desktopWidth};
 }
 `;
 
